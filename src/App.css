@@ -1,38 +1,82 @@
-.App {
-  text-align: center;
+/* style canvas */
+.offcanvas {
+  background-color: rgb(33, 37, 41) !important;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+@media only screen and (max-width:540px) {
+  .offcanvas {
+    width: 65% !important;
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
+.offcanvas-header {
+  border-bottom: 1px solid #bbb;
+}
+
+/* style navbar modal */
+.modal-header {
+  justify-content: center !important;
+}
+
+
+/* style registed modal */
+.registed-modal {
+  margin: 0 auto !important;
+  max-width: 90% !important;
+}
+
+.headModal-registed {
   flex-direction: column;
+}
+
+.headModal-title {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.headModal-chooseCourse{
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 10px 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+
+
+/*  paginate css */
+.paginate {
+  display: flex;
+  list-style: none;
+  flex-wrap: wrap;
+}
+
+.paginate .paginate-item {
+  padding: 5px 15px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.paginate .paginate-item:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.paginate .paginate-item.active {
+  background: #bbb;
+  border-color: transparent;
+  border-radius: 5px;
+}
+
+.paginate .paginate-item a {
+  color: #000;
+  text-decoration: none;
+}
+
+.paginate-button {
+  background-color: transparent;
+  border: transparent !important;
 }
