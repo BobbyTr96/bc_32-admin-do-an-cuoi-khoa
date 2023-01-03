@@ -8,6 +8,8 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 // bootstrap
 import Modal from "react-bootstrap/Modal";
+//redux
+import { useSelector, useDispatch } from "react-redux";
 // fetchet
 import CourseAPI from "../../../services/CourseAPI";
 
@@ -63,7 +65,14 @@ const RegistedModal = ({ show, handleOpenModal, chooseUserToRegisted }) => {
           <button className="btn btn-primary">Ghi Danh</button>
         </div>
       </Modal.Header>
-      <Modal.Body>Woohoo, you're reading this text in a modal 123!</Modal.Body>
+      <Modal.Body>
+        {" "}
+        {courses.map((item) => (
+          <a key={item.maKhoaHoc} value={item.maKhoaHoc}>
+            {item.tenKhoaHoc}
+          </a>
+        ))}
+      </Modal.Body>
       <Modal.Footer></Modal.Footer>
     </Modal>
   );
