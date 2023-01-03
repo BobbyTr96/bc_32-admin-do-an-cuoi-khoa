@@ -67,7 +67,7 @@ const RegistedModal = ({ show, handleOpenModal, chooseUserToRegisted }) => {
           <button className="btn btn-primary">Ghi Danh</button>
         </div>
       </Modal.Header>
-      <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+      <Modal.Body>Woohoo, you're reading this text in a modal 123!</Modal.Body>
       <Modal.Footer></Modal.Footer>
     </Modal>
   );
