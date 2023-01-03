@@ -51,6 +51,13 @@
   outline: none;
 }
 
+.headModal-select option {
+  width: 100%;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
 
 
 
@@ -85,4 +92,5 @@
 .paginate-button {
   background-color: transparent;
   border: transparent !important;
+
 }

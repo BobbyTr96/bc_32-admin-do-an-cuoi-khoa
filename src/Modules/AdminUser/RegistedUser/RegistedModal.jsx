@@ -53,15 +53,14 @@ const RegistedModal = ({ show, handleOpenModal, chooseUserToRegisted }) => {
           {/* select khóa học */}
 
           <select className="headModal-select">
-            {courses.map((item) => (
-              <option
-                style={{ width: "100%" }}
-                key={item.maKhoaHoc}
-                value={item.maKhoaHoc}
-              >
-                {item.tenKhoaHoc}
+            <option>1233333333333333333333333333333333333333333333333333333333333</option>
+            <option>123</option>
+            <option>123</option>
+            {/* {courses.map((item) => (
+              <option key={item.maKhoaHoc} value={item.maKhoaHoc}>
+                {item.biDanh}
               </option>
-            ))}
+            ))} */}
           </select>
 
           <button className="btn btn-primary">Ghi Danh</button>
