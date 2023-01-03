@@ -50,23 +50,20 @@ const RegistedModal = ({ show, handleOpenModal, chooseUserToRegisted }) => {
           <button className="btn-close" onClick={handleOpenModal}></button>
         </div>
         <div className="headModal-chooseCourse">
-          <FormControl sx={{ width: "80%" }} size="small">
-            <InputLabel>Khóa học</InputLabel>
-            <Select
-              native={true}
-              className="headModal-select"
-              value={age}
-              label="Khóa học"
-              //   multiple
-              onChange={handleChange}
-            >
-              {courses.map((item) => (
-                <option key={item.maKhoaHoc} value={item.maKhoaHoc}>
-                  {item.tenKhoaHoc}
-                </option>
-              ))}
-            </Select>
-          </FormControl>
+          {/* select khóa học */}
+
+          <select className="headModal-select">
+            {courses.map((item) => (
+              <option
+                style={{ width: "100%" }}
+                key={item.maKhoaHoc}
+                value={item.maKhoaHoc}
+              >
+                {item.tenKhoaHoc}
+              </option>
+            ))}
+          </select>
+
           <button className="btn btn-primary">Ghi Danh</button>
         </div>
       </Modal.Header>

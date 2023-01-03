@@ -37,12 +37,18 @@
   align-items: center;
 }
 
-.headModal-chooseCourse{
+.headModal-chooseCourse {
   width: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
   margin: 10px 0;
+}
+
+.headModal-select {
+  width: 80%;
+  padding: 5px 0;
+  outline: none;
 }
 
 
