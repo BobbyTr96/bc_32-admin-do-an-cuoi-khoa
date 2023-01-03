@@ -11,25 +11,37 @@ import Modal from "react-bootstrap/Modal";
 // fetchet
 import CourseAPI from "../../../services/CourseAPI";
 
-const RegistedModal = ({ show, handleOpenModal, user }) => {
+const RegistedModal = ({ show, handleOpenModal, chooseUserToRegisted }) => {
   const [courses, setCourses] = useState([]); //state array course chưa đăng kí
+  const [age, setAge] = useState("");
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
 
   useEffect(() => {
-    (async () => {
-      try {
-        const data = await CourseAPI.getUnRegistedCourse(user);
-        setCourses(courses);
-      } catch (error) {
-        console.log();
-      }
-    })();
-  }, []);
+    if (!chooseUserToRegisted) {
+      return;
+    } else {
+      (async () => {
+        try {
+          const data = await CourseAPI.getUnRegistedCourse(
+            chooseUserToRegisted
+          );
+          // set state array khóa học chưa đăng ký của user
+          setCourses(data);
+          console.log(data);
+        } catch (error) {
+          console.log();
+        }
+      })();
+    }
+  }, [chooseUserToRegisted]);
 
   return (
     <Modal
       show={show}
       onHide={handleOpenModal}
-      chooseUserToRegisted="modalRegisted"
       dialogClassName="registed-modal"
     >
       <Modal.Header className="headModal-registed">
@@ -41,12 +53,18 @@ const RegistedModal = ({ show, handleOpenModal, user }) => {
           <FormControl sx={{ width: "80%" }} size="small">
             <InputLabel>Khóa học</InputLabel>
             <Select
+              native={true}
               className="headModal-select"
-              //   value={age}
+              value={age}
               label="Khóa học"
-              //   onChange={handleChange}
+              //   multiple
+              onChange={handleChange}
             >
-              <MenuItem value="">1</MenuItem>
+              {courses.map((item) => (
+                <option key={item.maKhoaHoc} value={item.maKhoaHoc}>
+                  {item.tenKhoaHoc}
+                </option>
+              ))}
             </Select>
           </FormControl>
           <button className="btn btn-primary">Ghi Danh</button>

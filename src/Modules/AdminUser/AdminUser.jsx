@@ -23,13 +23,12 @@ const AdminUser = () => {
   const [users, setUsers] = useState([]); // state array user
   const [searchUser, setSearchUser] = useState(null); // state search term
   const [show, setShow] = useState(false); // control modal
-  const [user, setuser] = useState(null); //state chọn người dùng để ghi danh khóa học
+  const [chooseUserToRegisted, setChooseUserToRegisted] = useState(null); //state chọn người dùng để ghi danh khóa học
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   // modal func
-  const handleOpenModal = (taiKhoan) => {
-    setuser(taiKhoan);
+  const handleOpenModal = () => {
     setShow((state) => !state);
   };
 
@@ -141,6 +140,12 @@ const AdminUser = () => {
     navigate("/quanLyNguoiDung");
   };
 
+  // func ghi danh
+  const handleRegisted = (taiKhoan) => {
+    handleOpenModal();
+    setChooseUserToRegisted(taiKhoan);
+  };
+
   return (
     <StyleAdminUser>
       <div className="container searchUser">
@@ -212,7 +217,7 @@ const AdminUser = () => {
                   </button>
                   <button
                     className="btn btn-success"
-                    onClick={() => handleOpenModal(item.taiKhoan)}
+                    onClick={() => handleRegisted(item.taiKhoan)}
                   >
                     Ghi danh
                   </button>
@@ -238,9 +243,9 @@ const AdminUser = () => {
       </div>
       {/* modal */}
       <RegistedModal
-       
         show={show}
         handleOpenModal={handleOpenModal}
+        chooseUserToRegisted={chooseUserToRegisted}
       />
     </StyleAdminUser>
   );
@@ -254,10 +259,21 @@ const StyleAdminUser = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    @media only screen and (max-width: 600px) {
+      flex-direction: column;
+      align-items: start;
+    }
+
+    .searchInput {
+      @media only screen and (max-width: 600px) {
+        width: 100%;
+      }
+    }
 
     h1 {
       @media only screen and (max-width: 600px) {
         font-size: 15px;
+        margin-bottom: 10px;
       }
     }
   }
