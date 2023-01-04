@@ -69,7 +69,6 @@ const AdminNavBar = () => {
   return (
     <StyleNavBar>
       <Navbar
-     
         expand="lg"
         variant="dark"
         onToggle={handleOpenCanvas}
@@ -141,6 +140,7 @@ const AdminNavBar = () => {
         handleOpen={handleOpenCanvas}
         user={user}
         handleLogout={handleLogout}
+        handleOpenModal={handleOpenModal}
       />
 
       {/* modal */}

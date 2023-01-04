@@ -30,9 +30,9 @@ const NavModal = ({ showMadal, handleOpenModal, error, loading, user }) => {
   
   return (
     <Modal show={showMadal} onHide={handleOpenModal}>
-      <Modal.Header className="navModal-header">
+      <Modal.Header className="navModal-header" closeButton>
         <Modal.Title>Đăng Nhập</Modal.Title>
-      </Modal.Header>
+      </Modal.Header >
       <Modal.Body className="navModal-body">
         <Box
           component="form"

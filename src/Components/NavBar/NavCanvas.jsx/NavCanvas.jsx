@@ -5,7 +5,13 @@ import logo from "../../../img/cyberlogo-white.png";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import Accordion from "react-bootstrap/Accordion";
 
-const NavCanvas = ({ show, handleOpen, user, handleLogout }) => {
+const NavCanvas = ({
+  show,
+  handleOpen,
+  user,
+  handleLogout,
+  handleOpenModal,
+}) => {
   return (
     <Offcanvas show={show} onHide={handleOpen}>
       <Offcanvas.Header>
@@ -45,12 +51,9 @@ const NavCanvas = ({ show, handleOpen, user, handleLogout }) => {
                 </div>
               ) : (
                 <div className="authen ">
-                  <p>
-                    <a href="/dangKy">Đăng ký</a>
-                  </p>
-                  <p>
-                    <a href="/dangNhap">Đăng nhập</a>
-                  </p>
+                  <button className="btn btn-primary" onClick={handleOpenModal}>
+                    Đăng nhập
+                  </button>
                 </div>
               )}
             </Accordion.Body>
