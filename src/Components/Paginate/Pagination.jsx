@@ -62,6 +62,20 @@ const Pagination = ({
                 <a>{number}</a>
               </li>
             );
+          } else if (!maxPageNumberLimit && !minPageNumberLimit) {
+            return (
+              <li
+                key={number}
+                className={
+                  number === currentPage
+                    ? "paginate-item active"
+                    : "paginate-item"
+                }
+                onClick={() => paginate(number)}
+              >
+                <a>{number}</a>
+              </li>
+            );
           } else {
             return null;
           }

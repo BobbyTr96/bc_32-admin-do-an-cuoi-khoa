@@ -4,7 +4,7 @@ import styled from "styled-components";
 // my hooks
 import Pagination from "../../Components/Paginate/Pagination";
 //fetcher
-import AuthAPI from "../../services/AuthAPI";
+import CourseAPI from "../../services/CourseAPI";
 //material ui
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -15,13 +15,11 @@ import { useNavigate } from "react-router-dom";
 // icons
 import { FcSearch } from "react-icons/fc";
 import swal from "sweetalert";
-// slices action
-import { handleChoose, doneEdit } from "../../slices/AuthSlices";
-import RegistedModal from "./RegistedUser/RegistedModal";
 
-const AdminUser = () => {
-  const [users, setUsers] = useState([]); // state array user
-  const [searchUser, setSearchUser] = useState(null); // state search term
+
+const AdminCourse = () => {
+  const [courses, setCourses] = useState([]); // state array courses
+  const [searchCourse, setSearchCourse] = useState(null); // state search term
   const [show, setShow] = useState(false); // control modal
   const [chooseUserToRegisted, setChooseUserToRegisted] = useState(null); //state chọn người dùng để ghi danh khóa học
   const { user } = useSelector((state) => state.Auth); // redux state
@@ -42,36 +40,35 @@ const AdminUser = () => {
     setShow((state) => !state);
   };
 
-  // request API func lấy danh sách user || tìm kiếm user
+  // fetch API func
   const fetchAPI = async () => {
-    if (!searchUser) {
+    if (!searchCourse) {
       try {
-        const data = await AuthAPI.getUserList();
-        setUsers(data);
+        const data = await CourseAPI.getCourses();
+        setCourses(data);
       } catch (error) {
         alert(error);
       }
     } else {
       try {
-        const data = await AuthAPI.getUserList(searchUser);
-        setUsers(data);
+        const data = await CourseAPI.getCourses(searchCourse);
+        setCourses(data);
       } catch (error) {
         alert(error);
       }
     }
   };
 
-  // lifecycle thực thi func fetchAPI
   useEffect(() => {
     fetchAPI();
-  }, [searchUser]);
+  }, [searchCourse]);
 
   const [currentPage, setCurrentPage] = useState(1); // stata giá trị trang hiện tại của thanh pagination
   const itemPerPage = 10; // số lượng item mỗi trang
   const indexOfLastItem = currentPage * itemPerPage; // index của phần tử cuối cùng trong mảng
   const indexOfFirstItem = indexOfLastItem - itemPerPage; // index của phần tử đâu tiên trong mảng
-  const currentPageItems = users.slice(indexOfFirstItem, indexOfLastItem); // số item hiện tại của trang
-  const totalPageNumber = Math.ceil(users.length / itemPerPage); // tổng số trang
+  const currentPageItems = courses.slice(indexOfFirstItem, indexOfLastItem); // số item hiện tại của trang
+  const totalPageNumber = Math.ceil(courses.length / itemPerPage); // tổng số trang
 
   const [pageNumberLimit, setPageNumberLimit] = useState(5); // state giới hạn số trang hiển thị
   const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5); // state số lượng trang hiển thị tối đa
@@ -99,45 +96,22 @@ const AdminUser = () => {
     setCurrentPage((state) => state - 1);
   };
 
-  // hàm tăng số lượng trang
-  const IncreasePage = () => {
-    console.log(maxPageNumberLimit);
-    setMaxPageNumberLimit((state) => state + pageNumberLimit);
-    setMinPageNumberLimit((state) => state + pageNumberLimit);
-    setCurrentPage(maxPageNumberLimit + 1);
-  };
-
-  // hàm giảm số lượng trang
-  const DecreasePage = () => {
-    setMaxPageNumberLimit((state) => state - pageNumberLimit);
-    setMinPageNumberLimit((state) => state - pageNumberLimit);
-    setCurrentPage(minPageNumberLimit - pageNumberLimit + 1);
-  };
-
   // func tìm kiếm ng dùng
   const handleSearch = (evt) => {
     evt.preventDefault();
-    setSearchUser(evt.target[0].value);
+    setSearchCourse(evt.target[0].value);
   };
 
-  // func thêm người dùng
-  const handleAddUser = () => {
-    if (!user) {
-      swal({
-        text: "Vui lòng đăng nhập để thực hiện chức năng này",
-        icon: "warning",
-        button: true,
-      });
-      return;
-    }
-    // dispatch set state chooseUser = null để tránh trường hợp có giá trị state chooseUser thì sẽ nó sẽ thực hiện edit
-    dispatch(doneEdit());
+  // func thêm khóa học
+  const handleAddCourse = () => {
+    // bỏ thông tin edit đã lưu trước đó khỏi session storage
+    sessionStorage.removeItem("chooseCourse");
     // điều hướng sang trang /quanLyNguoiDung
-    navigate("/quanLyNguoiDung");
+    navigate("add");
   };
 
-  // func xóa ng dùng
-  const handleDelete = (taiKhoan) => {
+  // func xóa khóa học
+  const handleDelete = (maKhoaHoc) => {
     if (!user) {
       swal({
         text: "Vui lòng đăng nhập để thực hiện chức năng này",
@@ -147,17 +121,18 @@ const AdminUser = () => {
       return;
     }
     swal({
-      text: "Bạn muốn xóa người dùng này ???",
+      text: "Bạn muốn xóa khóa học này ???",
       icon: "warning",
       buttons: ["Không", "Đúng vậy"],
     }).then(async (response) => {
       if (response) {
         try {
-          await AuthAPI.deleteUser(taiKhoan);
-          // xóa thành công => gọi làm hàm fetchAPI
+          await CourseAPI.deleteCourse(maKhoaHoc);
+          // xóa thành công => gọi làm hàm fetchAPI để cập nhật lại arr
           fetchAPI();
+          // thông báo xóa thành công
           swal({
-            text: "Xóa người dùng thành công",
+            text: "Xóa khóa học thành công",
             icon: "success",
             button: true,
           });
@@ -178,19 +153,20 @@ const AdminUser = () => {
       });
       return;
     }
-    dispatch(handleChoose(item));
-    navigate("/quanLyNguoiDung");
+    // lưu thông tin khóa học muốn edit vào sessonStorage
+    sessionStorage.setItem("chooseCourse", JSON.stringify(item));
+    navigate("edit");
   };
 
   return (
-    <StyleAdminUser>
+    <StyleAdminCourse>
       <div className="container searchUser">
-        <h1>Danh Sách Người Dùng</h1>
-        <div className="searchInput">
+        <h1>Danh Sách Khóa Học</h1>
+        <div className="searchInput" style={{ position: "relative" }}>
           <Box
             component="form"
             sx={{
-              "& > :not(style)": { width: "100%" },
+              "& > :not(style)": { mb: 1, width: "100%" },
             }}
             noValidate
             autoComplete="off"
@@ -198,7 +174,7 @@ const AdminUser = () => {
           >
             <TextField
               id="outlined-basic"
-              label="Nhập tên người dùng"
+              label="Nhập tên khóa học"
               variant="outlined"
             />
           </Box>
@@ -213,8 +189,8 @@ const AdminUser = () => {
         </div>
       </div>
       <div className="container">
-        <button className="btn btn-success" onClick={handleAddUser}>
-          Thêm người dùng
+        <button className="btn btn-success" onClick={handleAddCourse}>
+          Thêm khóa học
         </button>
       </div>
 
@@ -223,11 +199,11 @@ const AdminUser = () => {
           <thead>
             <tr>
               <th>STT</th>
-              <th>Tài Khoản</th>
-              <th>Loại người dùng</th>
-              <th>Họ Tên</th>
-              <th>Email</th>
-              <th>Số Điện Thoại</th>
+              <th>Mã khóa học</th>
+              <th>Tên khóa học</th>
+              <th>Hinh ảnh</th>
+              <th>Lượt xem</th>
+              <th>Người tạo</th>
               <th>Thao Tác</th>
             </tr>
           </thead>
@@ -235,15 +211,22 @@ const AdminUser = () => {
             {currentPageItems.map((item, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
-                <td>{item.taiKhoan}</td>
-                <td>{item.maLoaiNguoiDung}</td>
-                <td>{item.hoTen}</td>
-                <td>{item.email}</td>
-                <td>{item.soDt}</td>
+                <td>{item.maKhoaHoc}</td>
+                <td>{item.tenKhoaHoc}</td>
+                <td>
+                  <img
+                    src={item.hinhAnh}
+                    alt="Onerror"
+                    height={50}
+                    width={50}
+                  />
+                </td>
+                <td>{item.luotXem}</td>
+                <td>{item.nguoiTao.hoTen}</td>
                 <td>
                   <button
                     className="btn btn-danger"
-                    onClick={() => handleDelete(item.taiKhoan)}
+                    onClick={() => handleDelete(item.maKhoaHoc)}
                   >
                     Xóa
                   </button>
@@ -265,7 +248,7 @@ const AdminUser = () => {
           </tbody>
         </table>
         {/* pagination */}
-        {users.length <= itemPerPage ? null : (
+        {courses.length <= itemPerPage ? null : (
           <Pagination
             totalPageNumber={totalPageNumber}
             currentPage={currentPage}
@@ -274,24 +257,22 @@ const AdminUser = () => {
             handlePrevBtn={handlePrevBtn}
             maxPageNumberLimit={maxPageNumberLimit}
             minPageNumberLimit={minPageNumberLimit}
-            IncreasePage={IncreasePage}
-            DecreasePage={DecreasePage}
           />
         )}
       </div>
       {/* modal */}
-      <RegistedModal
+      {/* <RegistedModal
         show={show}
         handleOpenModal={handleOpenModal}
         chooseUserToRegisted={chooseUserToRegisted}
-      />
-    </StyleAdminUser>
+      /> */}
+    </StyleAdminCourse>
   );
 };
 
-export default AdminUser;
+export default AdminCourse;
 
-const StyleAdminUser = styled.div`
+const StyleAdminCourse = styled.div`
   margin-top: 30px;
   .searchUser {
     display: flex;

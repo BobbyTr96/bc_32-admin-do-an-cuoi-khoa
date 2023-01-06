@@ -90,7 +90,11 @@ const AdminNavBar = () => {
             <img src={logo} alt="" height={50} />
           </Navbar.Brand>
           <Navbar.Toggle />
-          <Navbar.Collapse className="justify-content-end">
+          <Navbar.Collapse className="justify-content-between">
+            <div>
+              <a href="/" className="mx-3">Quản lý người dùng</a>
+              <a href="/quanLyKhoaHoc">Quản lý khóa học</a>
+            </div>
             <Navbar.Text>
               {user ? (
                 <>

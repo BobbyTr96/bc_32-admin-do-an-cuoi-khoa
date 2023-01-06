@@ -45,6 +45,15 @@
   margin: 10px 0;
 }
 
+@media only screen and (max-width:600px) {
+  .headModal-chooseCourse button {
+    padding: 10px 5px;
+    font-size: 10px;
+   
+  }
+
+}
+
 .headModal-select {
   width: 80%;
   padding: 5px 0;
@@ -93,4 +102,9 @@
   background-color: transparent;
   border: transparent !important;
 
+}
+
+/* css swal */
+.swal-footer {
+  text-align: center;
 }

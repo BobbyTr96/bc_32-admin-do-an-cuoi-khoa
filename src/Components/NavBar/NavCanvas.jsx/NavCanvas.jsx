@@ -22,6 +22,7 @@ const NavCanvas = ({
         </Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body>
+        {/* user */}
         <Accordion defaultActiveKey="0">
           <Accordion.Item eventKey="0">
             <Accordion.Header>
@@ -59,6 +60,14 @@ const NavCanvas = ({
             </Accordion.Body>
           </Accordion.Item>
         </Accordion>
+
+        {/* link direction */}
+        <div className="d-flex flex-column my-3">
+          <a href="/" >
+            Quản lý người dùng
+          </a>
+          <a href="/quanLyKhoaHoc">Quản lý khóa học</a>
+        </div>
       </Offcanvas.Body>
     </Offcanvas>
   );
