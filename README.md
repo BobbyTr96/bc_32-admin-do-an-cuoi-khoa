@@ -1,1 +1,1 @@
-Tài khoản admin : BobbyTrAdmin ; passwork:Quang@123
+Tài khoản admin : BobbyTrAdmin ; password :Quang@123
