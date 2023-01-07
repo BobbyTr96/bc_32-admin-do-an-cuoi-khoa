@@ -6,7 +6,12 @@ import CourseAPI from "../../../../services/CourseAPI";
 // swal
 import swal from "sweetalert";
 
-const UserValidate = ({ userApprovals, maKhoaHoc, fetchUserValidate }) => {
+const UserValidate = ({
+  userApprovals,
+  maKhoaHoc,
+  fetchUserAttended,
+  fetchUserValidate,
+}) => {
   const [currentPage, setCurrentPage] = useState(1); // stata giá trị trang hiện tại của thanh pagination
   const itemPerPage = 2; // số lượng item mỗi trang
   const indexOfLastItem = currentPage * itemPerPage; // index của phần tử cuối cùng trong mảng
@@ -38,7 +43,9 @@ const UserValidate = ({ userApprovals, maKhoaHoc, fetchUserValidate }) => {
         taiKhoan: taiKhoan,
         maKhoaHoc,
       });
-      // nếu đã chọn thì thực hiện request api hàm fetchUserValidate đề cập nhật lại danh sách người dùng chờ ghi danh
+      // nếu đã chọn thì thực hiện request api hàm fetchUserAttended đề cập nhật lại danh sách người dùng đã ghi danh
+      fetchUserAttended();
+      // chạy lai fetchUserValidate() để lấy danh sách chờ mới
       fetchUserValidate();
       // hiện thôn báo thành công
       swal({
@@ -64,10 +71,12 @@ const UserValidate = ({ userApprovals, maKhoaHoc, fetchUserValidate }) => {
       if (response) {
         try {
           await CourseAPI.unRegisterCourse({
-           taiKhoan,
+            taiKhoan,
             maKhoaHoc,
           });
           // nếu đã chọn thì thực hiện request api hàm fetchCourseValidate đề cập nhật lại danh sách khóa học chờ ghi danh
+          fetchUserAttended();
+          // chạy lai fetchUserValidate() để lấy danh sách chờ mới
           fetchUserValidate();
           // hiện thôn báo thành công
           swal({
