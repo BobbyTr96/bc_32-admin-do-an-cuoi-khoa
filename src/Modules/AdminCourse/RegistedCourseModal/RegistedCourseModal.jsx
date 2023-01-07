@@ -99,7 +99,7 @@ const RegistedCourseModal = ({ show, handleOpenModal, maKhoaHoc }) => {
 
   // func ghi danh người dùng
   const handleRegister = async () => {
-    // nếu chưa chọn khóa học thì hiện thông báo cho admin
+    // nếu chưa chọn user thì hiện thông báo cho admin
     if (!chooseUser) {
       swal({
         text: "Vui lòng chọn người dùng muốn ghi danh",
@@ -177,6 +177,7 @@ const RegistedCourseModal = ({ show, handleOpenModal, maKhoaHoc }) => {
         <UserValidate
           maKhoaHoc={maKhoaHoc}
           userApprovals={userApprovals}
+          fetchUserAttended={fetchUserAttended}
           fetchUserValidate={fetchUserValidate}
         />
 
