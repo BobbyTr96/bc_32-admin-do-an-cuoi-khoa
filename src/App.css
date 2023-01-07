@@ -49,7 +49,7 @@
   .headModal-chooseCourse button {
     padding: 10px 5px;
     font-size: 10px;
-   
+
   }
 
 }
@@ -60,11 +60,53 @@
   outline: none;
 }
 
-.headModal-select option {
+
+
+/* style user registed modal */
+.headModal-userRegisted {
+  flex-direction: column;
+}
+
+.headModal-userRegisted__title {
+  display: flex;
   width: 100%;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headModal-userRegisted__search {
+  width: 100%;
+  display: flex;
+  margin: 10px 0;
+  justify-content: end;
+  align-items: center;
+
+}
+
+.headModal-userRegisted__chooseUser {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.headModal-userRegisted__select {
+  width: 80%;
+  outline: none;
+}
+
+@media only screen and (max-width:600px) {
+  .headModal-userRegisted__select {
+    width: 80%;
+  }
+
+  .headModal-userRegisted__chooseUser button {
+    padding:10px 5px;
+    font-size: 10px;
+  }
+
+  .headModal-userRegisted__search button{
+    padding:6px 5px;
+  }
 }
 
 

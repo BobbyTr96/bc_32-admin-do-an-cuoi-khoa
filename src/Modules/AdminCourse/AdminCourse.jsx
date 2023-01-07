@@ -15,19 +15,19 @@ import { useNavigate } from "react-router-dom";
 // icons
 import { FcSearch } from "react-icons/fc";
 import swal from "sweetalert";
-
+import RegistedCourseModal from "./RegistedCourseModal/RegistedCourseModal";
 
 const AdminCourse = () => {
   const [courses, setCourses] = useState([]); // state array courses
   const [searchCourse, setSearchCourse] = useState(null); // state search term
   const [show, setShow] = useState(false); // control modal
-  const [chooseUserToRegisted, setChooseUserToRegisted] = useState(null); //state chọn người dùng để ghi danh khóa học
+  const [choosecourseToRegisted, setChooseCourseToRegisted] = useState(null); //state chọn người dùng để ghi danh khóa học
   const { user } = useSelector((state) => state.Auth); // redux state
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   //func open modal + ghi danh
-  const handleOpenModal = (taiKhoan) => {
+  const handleOpenModal = (maKhoaHoc) => {
     if (!user) {
       swal({
         text: "Vui lòng đăng nhập để thực hiện chức năng này",
@@ -36,7 +36,7 @@ const AdminCourse = () => {
       });
       return;
     }
-    setChooseUserToRegisted(taiKhoan);
+    setChooseCourseToRegisted(maKhoaHoc);
     setShow((state) => !state);
   };
 
@@ -238,7 +238,7 @@ const AdminCourse = () => {
                   </button>
                   <button
                     className="btn btn-success"
-                    onClick={() => handleOpenModal(item.taiKhoan)}
+                    onClick={() => handleOpenModal(item.maKhoaHoc)}
                   >
                     Ghi danh
                   </button>
@@ -261,11 +261,11 @@ const AdminCourse = () => {
         )}
       </div>
       {/* modal */}
-      {/* <RegistedModal
+      <RegistedCourseModal
         show={show}
         handleOpenModal={handleOpenModal}
-        chooseUserToRegisted={chooseUserToRegisted}
-      /> */}
+        maKhoaHoc={choosecourseToRegisted}
+      />
     </StyleAdminCourse>
   );
 };

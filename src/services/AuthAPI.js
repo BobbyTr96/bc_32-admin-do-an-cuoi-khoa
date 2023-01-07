@@ -15,6 +15,27 @@ const AuthAPI = {
     });
   },
 
+  // api lấy danh sách ng dùng chưa ghi danh khóa học
+  getUsersUnregistedCourse: (maKhoaHoc) => {
+    return fetcher.post("QuanLyNguoiDung/LayDanhSachNguoiDungChuaGhiDanh", {
+      maKhoaHoc,
+    });
+  },
+
+  // api lấy danh sách ng dùng đã ghi danh khóa học
+  getUserAttendedCourses: (maKhoaHoc) => {
+    return fetcher.post("QuanLyNguoiDung/LayDanhSachHocVienKhoaHoc", {
+      maKhoaHoc,
+    });
+  },
+
+  // api lấy arr user chờ xác thực
+  getUserWaitForValidate: (maKhoaHoc) => {
+    return fetcher.post("QuanLyNguoiDung/LayDanhSachHocVienChoXetDuyet", {
+      maKhoaHoc,
+    });
+  },
+
   // api delete user
   deleteUser: (taiKhoan) => {
     return fetcher.delete("QuanLyNguoiDung/XoaNguoiDung", {
@@ -24,28 +45,21 @@ const AuthAPI = {
     });
   },
 
+  // edit user
   editUser: (payload) => {
     return fetcher.put("QuanLyNguoiDung/CapNhatThongTinNguoiDung", {
       ...payload,
-      maNhom:"GP01"
+      maNhom: "GP01",
     });
   },
 
-  addUser:(payload)=>{
+  // add user
+  addUser: (payload) => {
     return fetcher.post("QuanLyNguoiDung/ThemNguoiDung", {
       ...payload,
-      maNhom:"GP01"
+      maNhom: "GP01",
     });
-  }
-
-  // api tìm kiếm ng dùng
-  // searchUser: (userName) => {
-  //   return fetcher.get("QuanLyNguoiDung/TimKiemNguoiDung", {
-  //     params: {
-  //       tuKhoa: userName,
-  //     },
-  //   });
-  // },
+  },
 };
 
 export default AuthAPI;
