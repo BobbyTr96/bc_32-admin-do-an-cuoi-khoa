@@ -27,7 +27,6 @@ const EditCourse = () => {
   ); // state select maKhoaHoc ở input select
   const userAccount = user.taiKhoan; // biến lưu trữ taiKhoan của user
   const [img, setImg] = useState(course?.hinhAnh); // state lưu trữ hình ảnh đã đc biến đổi sang base64
-  const [flagImg, setFlagImg] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -77,15 +76,12 @@ const EditCourse = () => {
   // func chọn hình ảnh
   const handleChangeImg = (evt) => {
     const file = evt.target.files[0];
-    console.log(evt.target.files[0]);
+
     if (!file) return;
     // setValue cho input hinhAnh của react-hook-form bằng thủ công
     setValue("hinhAnh", file);
-    // khi ng dùng click thay đổi hình thì set cờ hiệu = true
-    setFlagImg(true);
     // xử lý hiển thị image ==>  bằng 1 built-in class của js ==> new FileReader()
     const fileReader = new FileReader();
-
     fileReader.readAsDataURL(file); // .readAsDataURL() => parse file object thành file nhị phân ==> là tác vụ bất đồng bộ
 
     //.onload là callback func giúp lấy được dữ liệu hình ảnh từ bất đồng bộ
@@ -96,30 +92,24 @@ const EditCourse = () => {
 
   //===============
   const submit = async (value) => {
-    console.log(value);
-    let payload = null;
-    // thêm mã nhóm vào data
-    if (flagImg) {
-      // nếu cờ hiệu = true thì sửa đổi hình ảnh truyền lên
-      payload = {
-        ...value,
-        hinhAnh: value.hinhAnh.name,
-        maNhom: "GP01",
-      };
-    } else {
-      payload = {
-        ...value,
-        maNhom: "GP01",
-      };
+    const payload = { ...value, maNhom: "GP01" };
+
+    const formData = new FormData();
+    for (let key in payload) {
+      formData.append(key, payload[key]);
     }
 
     // call api edit phim
     try {
       // nếu có thông tin edit thì call api update , không thì add
       if (!course) {
-        await CourseAPI.addCourse(payload);
+        await CourseAPI.addCourse(formData);
       } else {
-        await CourseAPI.editCourse(payload);
+        if (typeof value.hinhAnh === "string") {
+          await CourseAPI.editCourseWithoutImage(payload);
+        } else {
+          await CourseAPI.editCourse(formData);
+        }
       }
 
       // call thành công thì hiện thông báo

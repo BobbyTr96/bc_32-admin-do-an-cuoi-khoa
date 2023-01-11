@@ -58,12 +58,16 @@ const CourseAPI = {
 
   // request API cập nhật khóa học
   editCourse: (payload) => {
+    return fetcher.post("QuanLyKhoaHoc/CapNhatKhoaHocUpload", payload);
+  },
+
+  editCourseWithoutImage: (payload) => {
     return fetcher.put("QuanLyKhoaHoc/CapNhatKhoaHoc", payload);
   },
 
   // request api thêm khóa học
   addCourse: (payload) => {
-    return fetcher.post("QuanLyKhoaHoc/ThemKhoaHoc", payload);
+    return fetcher.post("QuanLyKhoaHoc/ThemKhoaHocUploadHinh", payload);
   },
 };
 
