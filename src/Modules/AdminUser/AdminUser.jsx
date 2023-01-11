@@ -55,6 +55,8 @@ const AdminUser = () => {
       try {
         const data = await AuthAPI.getUserList(searchUser);
         setUsers(data);
+        // mỗi lần search thì set currenPage về lại 1 cho ng dùng xem
+        setCurrentPage(1);
       } catch (error) {
         alert(error);
       }

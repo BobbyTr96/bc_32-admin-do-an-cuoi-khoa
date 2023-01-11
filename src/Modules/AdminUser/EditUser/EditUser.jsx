@@ -22,12 +22,12 @@ const EditUser = () => {
 
   const { register, handleSubmit, formState, setValue, reset } = useForm({
     defaultValues: {
-        taiKhoan: chooseUser?.taiKhoan,
-        matKhau: chooseUser?.matKhau,
-        hoTen: chooseUser?.hoTen,
-        soDT: chooseUser?.soDt,
-        maLoaiNguoiDung: chooseUser?.maLoaiNguoiDung,
-        email: chooseUser?.email,
+      taiKhoan: chooseUser?.taiKhoan,
+      matKhau: chooseUser?.matKhau,
+      hoTen: chooseUser?.hoTen,
+      soDT: chooseUser?.soDt,
+      maLoaiNguoiDung: chooseUser?.maLoaiNguoiDung,
+      email: chooseUser?.email,
     },
     mode: "onBlur",
   });
@@ -98,6 +98,7 @@ const EditUser = () => {
             <span className="text-danger">{errors.taiKhoan.message}</span>
           )}
 
+          {/* nếu là thêm ng dùng thì thêm input mk vào giao diện */}
           {chooseUser ? null : (
             <>
               <TextField

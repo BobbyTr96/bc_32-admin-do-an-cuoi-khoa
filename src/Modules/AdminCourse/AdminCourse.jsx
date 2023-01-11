@@ -42,20 +42,14 @@ const AdminCourse = () => {
 
   // fetch API func
   const fetchAPI = async () => {
-    if (!searchCourse) {
-      try {
-        const data = await CourseAPI.getCourses();
-        setCourses(data);
-      } catch (error) {
-        alert(error);
-      }
-    } else {
-      try {
-        const data = await CourseAPI.getCourses(searchCourse);
-        setCourses(data);
-      } catch (error) {
-        alert(error);
-      }
+    try {
+      const data = await CourseAPI.getCourses(searchCourse);
+      // cập nhật dữ liệu arr khóa học vào state
+      setCourses(data);
+      // mỗi lần search thì set currenPage về lại 1 cho ng dùng xem
+      setCurrentPage(1);
+    } catch (error) {
+      alert(error);
     }
   };
 
